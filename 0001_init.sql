@@ -2,7 +2,7 @@ PRAGMA foreign_keys = ON;
 
 CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY,
-  email TEXT NOT NULL UNIQUE COLLATE NOCASE,
+  email TEXT NOT NULL COLLATE NOCASE UNIQUE,
   display_name TEXT NOT NULL,
   password_salt TEXT NOT NULL,
   password_hash TEXT NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS sessions (
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 CREATE INDEX IF NOT EXISTS sessions_user_id_idx ON sessions(user_id);
-CREATE INDEX IF NOT EXISTS sessions_expires_idx ON sessions(expires_at);
+CREATE INDEX IF NOT EXISTS sessions_expires_at_idx ON sessions(expires_at);
 
 CREATE TABLE IF NOT EXISTS trips (
   id TEXT PRIMARY KEY,
@@ -29,12 +29,13 @@ CREATE TABLE IF NOT EXISTS trips (
   created_at TEXT NOT NULL DEFAULT (datetime('now')),
   updated_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
+CREATE INDEX IF NOT EXISTS trips_owner_id_idx ON trips(owner_id);
 
 CREATE TABLE IF NOT EXISTS trip_members (
   trip_id TEXT NOT NULL REFERENCES trips(id) ON DELETE CASCADE,
   user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  role TEXT NOT NULL DEFAULT 'editor' CHECK(role IN ('owner','editor')),
-  added_at TEXT NOT NULL DEFAULT (datetime('now')),
+  role TEXT NOT NULL CHECK (role IN ('owner', 'editor')),
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
   PRIMARY KEY (trip_id, user_id)
 );
-CREATE INDEX IF NOT EXISTS trip_members_user_idx ON trip_members(user_id);
+CREATE INDEX IF NOT EXISTS trip_members_user_id_idx ON trip_members(user_id);

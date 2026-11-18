@@ -1,100 +1,117 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#10251f"><meta name="description" content="MI VIAJE: organiza viajes y compártelos con tus acompañantes.">
-<link rel="manifest" href="/manifest.webmanifest">
-<link rel="icon" href="/icon.svg" type="image/svg+xml">
-<title>MI VIAJE · Organiza mejor</title>
-<style>
-:root{--ink:#17251f;--muted:#68766f;--paper:#f5f6f2;--card:#fff;--green:#173d31;--lime:#c7df9a;--line:#e4e9e2;--red:#a33b35}
-*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}
-header{background:var(--green);color:white;padding:22px max(22px,calc((100% - 1100px)/2));display:flex;justify-content:space-between;align-items:center;gap:20px}
-.brand{font-size:21px;font-weight:850;letter-spacing:.12em}.brand span{color:var(--lime)}.sub{font-size:12px;color:#c9d8d0}
-main{max-width:1100px;margin:36px auto;padding:0 22px}.top{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:25px}h1{font-size:clamp(28px,4vw,42px);line-height:1.1;margin:0 0 8px;letter-spacing:-.04em}h2{font-size:19px;margin:0 0 16px}.muted{color:var(--muted)}.panel,.trip,.auth{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:23px;box-shadow:0 8px 30px #193b2810}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.auth{max-width:480px;margin:50px auto}.field{display:grid;gap:6px;margin:12px 0}label{font-size:13px;font-weight:700;color:#415249}input,textarea{font:inherit;border:1px solid #dce4dc;border-radius:10px;padding:11px 12px;width:100%;background:#fff;color:var(--ink)}textarea{min-height:90px;resize:vertical}
-button{border:0;border-radius:11px;background:var(--green);color:white;padding:11px 16px;font:700 14px inherit;cursor:pointer}button.secondary{background:#edf2eb;color:var(--green)}button.danger{background:#fff0ee;color:var(--red)}button:disabled{opacity:.5;cursor:not-allowed}
-.actions{display:flex;gap:9px;flex-wrap:wrap}.triplist{display:grid;gap:12px}.trip{padding:18px;box-shadow:none}.trip h3{margin:0 0 3px}.trip p{margin:3px 0}.tag{display:inline-block;border-radius:99px;background:#edf3e8;color:#34513d;padding:4px 9px;font-size:11px;font-weight:750}
-.notice{padding:11px 13px;border-radius:10px;background:#f0f4ed;color:#3c5546;margin:12px 0}.error{background:#fff0ee;color:#943d37}.hidden{display:none!important}.right{display:flex;align-items:center;gap:12px}.modal{margin-top:18px;border-top:1px solid var(--line);padding-top:18px}.small{font-size:12px}.empty{text-align:center;padding:35px;color:var(--muted)}
-@media(max-width:700px){.grid{grid-template-columns:1fr}header{padding:18px 20px}main{margin:25px auto}.top{align-items:start;flex-direction:column}.right{align-items:flex-start;flex-direction:column}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#102a2a">
+  <meta name="description" content="Organiza tus viajes y compártelos con tus acompañantes.">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <title>MI VIAJE · Tu espacio para viajar</title>
+  <style>
+    :root{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;color:#172b2b;background:#f4f6f3;font-synthesis:none}*{box-sizing:border-box}body{margin:0;min-height:100vh}button,input,textarea{font:inherit}button{cursor:pointer}.shell{max-width:1080px;margin:auto;padding:28px 20px 64px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px}.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.12em}.mark{width:42px;height:42px;border-radius:14px;background:#123b38;color:#e7c98b;display:grid;place-items:center;font-size:21px}.muted{color:#70807c}.hero{background:#123b38;color:#fff;border-radius:28px;padding:34px;margin-bottom:24px;position:relative;overflow:hidden}.hero:after{content:'✦';position:absolute;right:35px;top:15px;font-size:110px;color:#ffffff12}.eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#d9c28e;font-weight:700}.hero h1{font-size:clamp(28px,5vw,44px);line-height:1.08;margin:12px 0;max-width:620px}.hero p{color:#d5e1dc;max-width:560px;line-height:1.6;margin-bottom:0}.panel{background:white;border:1px solid #e4eae5;border-radius:22px;padding:24px;box-shadow:0 10px 35px #1b3b3010}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.field{display:grid;gap:7px;margin:13px 0}.field label{font-size:13px;font-weight:650;color:#435550}.field input,.field textarea{width:100%;border:1px solid #dbe3dd;border-radius:12px;padding:12px 13px;background:#fbfcfa;color:#172b2b;outline:none}.field input:focus,.field textarea:focus{border-color:#387d6c;box-shadow:0 0 0 3px #387d6c18}.btn{border:0;border-radius:12px;padding:12px 17px;background:#174b43;color:white;font-weight:700}.btn.secondary{background:#edf3ef;color:#21483f}.btn.danger{background:#fff0ed;color:#a33d2c}.btn:disabled{opacity:.5;cursor:not-allowed}.tabs{display:flex;gap:8px;margin-bottom:18px}.tabs button{border:0;border-radius:10px;padding:10px 14px;background:#eef2ee;color:#53635d;font-weight:700}.tabs button.active{background:#174b43;color:white}.message{margin-top:14px;padding:12px 14px;border-radius:12px;background:#fff4e6;color:#80521b;font-size:14px}.hidden{display:none!important}.trip{border:1px solid #e4eae5;border-radius:16px;padding:17px;margin-top:12px;display:flex;justify-content:space-between;gap:16px;align-items:center}.trip h3{margin:0 0 5px}.trip p{margin:0;color:#70807c;font-size:14px}.section-head{display:flex;justify-content:space-between;align-items:center;gap:12px}.small{font-size:12px}.footer{text-align:center;color:#87938d;font-size:12px;margin-top:25px}@media(max-width:700px){.grid{grid-template-columns:1fr}.hero{padding:25px}.shell{padding:18px 14px 44px}.panel{padding:18px}.trip{align-items:flex-start;flex-direction:column}}
+  </style>
 </head>
 <body>
-<header><div><div class="brand">MI <span>VIAJE</span></div><div class="sub">Tus viajes, organizados y compartidos</div></div><div id="headerUser" class="right"></div></header>
-<main>
-<section id="authView" class="auth">
-  <div class="tag">PLANIFICA · COMPARTE · DISFRUTA</div>
-  <h1 style="margin-top:14px">Cada viaje,<br>en su sitio.</h1>
-  <p class="muted">Crea tu cuenta gratuita y organiza viajes con las personas que te acompañan.</p>
-  <div class="actions" style="margin:20px 0"><button id="showLogin">Iniciar sesión</button><button class="secondary" id="showRegister">Crear cuenta</button></div>
-  <form id="authForm">
-    <div id="nameField" class="field hidden"><label for="name">Nombre</label><input id="name" autocomplete="name" minlength="2" maxlength="80"></div>
-    <div class="field"><label for="email">Correo electrónico</label><input id="email" type="email" autocomplete="username" required></div>
-    <div class="field"><label for="password">Contraseña</label><input id="password" type="password" autocomplete="current-password" minlength="12" required><span class="small muted">Mínimo 12 caracteres.</span></div>
-    <button id="authSubmit" type="submit" style="width:100%">Iniciar sesión</button>
-  </form><div id="authMessage" class="notice hidden"></div>
-  <p class="small muted">La cuenta es personal. El propietario de un viaje puede invitar a otros usuarios registrados por correo electrónico.</p>
-</section>
-
-<section id="appView" class="hidden">
- <div class="top"><div><div class="tag">ESPACIO PERSONAL</div><h1 id="greeting">Tus viajes</h1><div class="muted">Planifica en equipo y ten toda la información a mano.</div></div><button id="newTripBtn">＋ Crear viaje</button></div>
- <div id="message" class="notice hidden"></div>
- <div class="grid">
-  <section class="panel"><h2>Mis viajes</h2><div id="tripList" class="triplist"><div class="empty">Cargando…</div></div></section>
-  <section class="panel"><h2 id="formTitle">Nuevo viaje</h2>
-   <form id="tripForm">
-    <input type="hidden" id="tripId">
-    <div class="field"><label for="tripName">Nombre del viaje *</label><input id="tripName" required maxlength="120" placeholder="Ej. Italia en verano"></div>
-    <div class="field"><label for="destination">Destino</label><input id="destination" maxlength="160" placeholder="Ej. Roma, Florencia y Venecia"></div>
-    <div class="grid">
-     <div class="field"><label for="startDate">Fecha de inicio</label><input id="startDate" type="date"></div>
-     <div class="field"><label for="endDate">Fecha de fin</label><input id="endDate" type="date"></div>
-    </div>
-    <div class="field"><label for="notes">Notas del viaje</label><textarea id="notes" maxlength="5000" placeholder="Reservas, ideas, teléfonos útiles…"></textarea></div>
-    <div class="actions"><button type="submit">Guardar viaje</button><button type="button" class="secondary" id="clearForm">Limpiar</button></div>
-   </form>
-   <div id="shareBox" class="modal hidden"><h2>Compartir este viaje</h2><p class="muted small">La otra persona debe crear primero una cuenta con ese correo. Después tendrá acceso para consultar y editar este viaje.</p>
-    <form id="shareForm"><div class="field"><label for="shareEmail">Correo de la persona</label><input id="shareEmail" type="email" required placeholder="persona@correo.com"></div><button type="submit">Añadir participante</button></form>
-    <div id="members" class="small muted"></div>
-   </div>
-  </section>
- </div>
- <p class="small muted" style="margin-top:18px">Versión inicial · Los datos de viajes se guardan en una base de datos compartida. No subas pasaportes, tarjetas ni documentos sensibles en esta versión.</p>
-</section>
-</main>
+  <main class="shell">
+    <header class="top"><div class="brand"><div class="mark">✦</div><span>MI VIAJE</span></div><span class="muted small">Tu espacio para viajar</span></header>
+    <section class="hero"><div class="eyebrow">Viajar mejor empieza aquí</div><h1>Todos tus viajes,<br>en un mismo lugar.</h1><p>Organiza escapadas, comparte planes con tus acompañantes y ten la información importante siempre a mano.</p></section>
+    <section id="auth" class="panel">
+      <div class="tabs"><button id="loginTab" class="active" type="button">Iniciar sesión</button><button id="registerTab" type="button">Crear cuenta</button></div>
+      <form id="authForm">
+        <div id="nameField" class="field hidden"><label for="name">Tu nombre</label><input id="name" autocomplete="name" maxlength="80"></div>
+        <div class="field"><label for="email">Correo electrónico</label><input id="email" type="email" autocomplete="email" required maxlength="254"></div>
+        <div class="field"><label for="password">Contraseña</label><input id="password" type="password" autocomplete="current-password" required minlength="12" maxlength="200"><span class="muted small">Mínimo 12 caracteres.</span></div>
+        <button class="btn" id="authSubmit" type="submit">Entrar</button>
+      </form>
+      <div id="authMessage" class="message hidden" role="status"></div>
+    </section>
+    <section id="dashboard" class="hidden">
+      <div class="section-head" style="margin:0 0 18px"><div><div class="eyebrow" style="color:#8b7544">Tu espacio</div><h2 style="margin:5px 0">Mis viajes</h2><div id="welcome" class="muted"></div></div><button id="logout" class="btn secondary" type="button">Cerrar sesión</button></div>
+      <div class="grid">
+        <section class="panel"><h3 style="margin-top:0">Crear un viaje</h3><form id="tripForm">
+          <div class="field"><label for="tripName">Nombre del viaje</label><input id="tripName" required minlength="2" maxlength="120" placeholder="Ej. Verano en Italia"></div>
+          <div class="field"><label for="destination">Destino</label><input id="destination" maxlength="160" placeholder="Ej. Roma y Florencia"></div>
+          <div class="field"><label for="startDate">Fecha de inicio</label><input id="startDate" type="date"></div>
+          <div class="field"><label for="endDate">Fecha de fin</label><input id="endDate" type="date"></div>
+          <div class="field"><label for="notes">Notas</label><textarea id="notes" rows="3" maxlength="5000" placeholder="Ideas, reservas, información útil..."></textarea></div>
+          <button class="btn" type="submit">Guardar viaje</button>
+        </form><div id="tripMessage" class="message hidden" role="status"></div></section>
+        <section class="panel"><div class="section-head"><h3 style="margin:0">Tus viajes guardados</h3><button id="refresh" class="btn secondary" type="button">Actualizar</button></div><div id="trips"><p class="muted">Cargando tus viajes...</p></div></section>
+      </div>
+      <section id="sharePanel" class="panel hidden" style="margin-top:20px"><div class="section-head"><div><h3 id="shareTitle" style="margin:0">Compartir viaje</h3><p class="muted small">Añade el correo de alguien que ya tenga una cuenta en MI VIAJE.</p></div><button id="closeShare" class="btn secondary" type="button">Cerrar</button></div><form id="shareForm"><div class="field"><label for="shareEmail">Correo del acompañante</label><input id="shareEmail" type="email" required maxlength="254"></div><button class="btn" type="submit">Añadir participante</button></form><div id="shareMessage" class="message hidden" role="status"></div></section>
+    </section>
+    <div class="footer">MI VIAJE · Aplicación en desarrollo · Protege tus contraseñas y no compartas información sensible.</div>
+  </main>
 <script>
-const $ = id => document.getElementById(id);
-let mode = "login", user = null, trips = [], selectedTrip = null;
-async function api(path, options={}) {
- const response = await fetch("/api"+path,{credentials:"same-origin",headers:{"content-type":"application/json",...(options.headers||{})},...options});
- const data = await response.json().catch(()=>({error:"Respuesta no válida del servidor."}));
- if(!response.ok) throw new Error(data.error || "Ha ocurrido un error.");
- return data;
-}
-function message(target,text,error=false){$(target).textContent=text;$(target).classList.remove("hidden","error");if(error)$(target).classList.add("error");}
-function setMode(next){mode=next;$("nameField").classList.toggle("hidden",mode!=="register");$("authSubmit").textContent=mode==="register"?"Crear cuenta":"Iniciar sesión";$("password").autocomplete=mode==="register"?"new-password":"current-password";$("authMessage").classList.add("hidden");}
-$("showLogin").onclick=()=>setMode("login");$("showRegister").onclick=()=>setMode("register");
-$("authForm").onsubmit=async e=>{e.preventDefault();$("authSubmit").disabled=true;try{
- const data={email:$("email").value,password:$("password").value};if(mode==="register")data.name=$("name").value;
- const result=await api("/"+(mode==="register"?"register":"login"),{method:"POST",body:JSON.stringify(data)});user=result.user;await showApp();
- }catch(err){message("authMessage",err.message,true)}finally{$("authSubmit").disabled=false}};
-$("headerUser").addEventListener("click",async e=>{if(e.target.id==="logout"){await api("/logout",{method:"POST",body:"{}"});user=null;showAuth()}});
-function showAuth(){$("authView").classList.remove("hidden");$("appView").classList.add("hidden");$("headerUser").innerHTML="";}
-async function showApp(){$("authView").classList.add("hidden");$("appView").classList.remove("hidden");$("headerUser").innerHTML=`<span class="small">${escapeHtml(user.name)}</span><button id="logout" class="secondary">Salir</button>`;$("greeting").textContent="Hola, "+user.name.split(" ")[0];await loadTrips();}
-function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
-async function loadTrips(){const result=await api("/trips");trips=result.trips;renderTrips();}
-function renderTrips(){
- const list=$("tripList");if(!trips.length){list.innerHTML='<div class="empty">Todavía no tienes viajes.<br>Crea el primero para empezar.</div>';return}
- list.innerHTML=trips.map(t=>`<article class="trip"><div class="actions" style="justify-content:space-between"><span class="tag">${t.role==="owner"?"PROPIETARIO":"COMPARTIDO"} · ${t.member_count} participante(s)</span><span class="small muted">${escapeHtml(t.start_date||"Fechas pendientes")}</span></div><h3>${escapeHtml(t.name)}</h3><p class="muted">${escapeHtml(t.destination||"Destino por definir")}</p><div class="actions" style="margin-top:12px"><button class="secondary" data-edit="${t.id}">Abrir / editar</button>${t.role==="owner"?`<button class="danger" data-delete="${t.id}">Eliminar</button>`:""}</div></article>`).join("");
- list.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>editTrip(b.dataset.edit));
- list.querySelectorAll("[data-delete]").forEach(b=>b.onclick=()=>deleteTrip(b.dataset.delete));
-}
-function resetForm(){selectedTrip=null;$("tripId").value="";$("formTitle").textContent="Nuevo viaje";$("tripForm").reset();$("shareBox").classList.add("hidden");}
-$("newTripBtn").onclick=resetForm;$("clearForm").onclick=resetForm;
-async function editTrip(id){try{const data=await api("/trips/"+id);const t=data.trip;selectedTrip=id;$("tripId").value=id;$("formTitle").textContent="Editar viaje";$("tripName").value=t.name;$("destination").value=t.destination;$("startDate").value=t.start_date;$("endDate").value=t.end_date;$("notes").value=t.notes;$("shareBox").classList.toggle("hidden",t.owner_id!==user.id);$("members").textContent="Participantes: "+data.members.map(m=>m.display_name+" ("+m.email+")").join(", ");}catch(e){message("message",e.message,true)}}
-$("tripForm").onsubmit=async e=>{e.preventDefault();const payload={name:$("tripName").value,destination:$("destination").value,start_date:$("startDate").value,end_date:$("endDate").value,notes:$("notes").value};try{if(selectedTrip)await api("/trips/"+selectedTrip,{method:"PUT",body:JSON.stringify(payload)});else await api("/trips",{method:"POST",body:JSON.stringify(payload)});message("message","Viaje guardado correctamente.");resetForm();await loadTrips()}catch(err){message("message",err.message,true)}};
-$("shareForm").onsubmit=async e=>{e.preventDefault();try{await api("/trips/"+selectedTrip+"/members",{method:"POST",body:JSON.stringify({email:$("shareEmail").value})});$("shareEmail").value="";await editTrip(selectedTrip);message("message","Participante añadido. Ya puede acceder a este viaje.")}catch(err){message("message",err.message,true)}};
-async function deleteTrip(id){if(!confirm("¿Eliminar este viaje y el acceso de todos sus participantes?"))return;try{await api("/trips/"+id,{method:"DELETE"});resetForm();await loadTrips();message("message","Viaje eliminado.")}catch(e){message("message",e.message,true)}}
-(async()=>{try{const data=await api("/me");if(data.user){user=data.user;await showApp()}else showAuth()}catch{showAuth()}})();
+  const $ = id => document.getElementById(id);
+  let authMode = 'login';
+  let selectedTrip = null;
+  async function api(path, options = {}) {
+    const response = await fetch('/api' + path, { credentials: 'same-origin', ...options, headers: { 'content-type': 'application/json', ...(options.headers || {}) } });
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(data.error || `Error ${response.status}`);
+    return data;
+  }
+  function showMessage(id, text) { const el = $(id); el.textContent = text; el.classList.remove('hidden'); }
+  function hideMessage(id) { $(id).classList.add('hidden'); }
+  function setMode(mode) {
+    authMode = mode;
+    $('loginTab').classList.toggle('active', mode === 'login');
+    $('registerTab').classList.toggle('active', mode === 'register');
+    $('nameField').classList.toggle('hidden', mode !== 'register');
+    $('authSubmit').textContent = mode === 'login' ? 'Entrar' : 'Crear cuenta';
+    $('password').autocomplete = mode === 'login' ? 'current-password' : 'new-password';
+    hideMessage('authMessage');
+  }
+  $('loginTab').addEventListener('click', () => setMode('login'));
+  $('registerTab').addEventListener('click', () => setMode('register'));
+  $('authForm').addEventListener('submit', async event => {
+    event.preventDefault(); hideMessage('authMessage');
+    const payload = { email: $('email').value, password: $('password').value };
+    if (authMode === 'register') payload.name = $('name').value;
+    try {
+      await api(authMode === 'login' ? '/login' : '/register', { method: 'POST', body: JSON.stringify(payload) });
+      $('authForm').reset(); await loadApp();
+    } catch (error) { showMessage('authMessage', error.message); }
+  });
+  async function loadApp() {
+    try {
+      const me = await api('/me');
+      if (!me.user) { $('auth').classList.remove('hidden'); $('dashboard').classList.add('hidden'); return; }
+      $('auth').classList.add('hidden'); $('dashboard').classList.remove('hidden'); $('welcome').textContent = `Sesión iniciada como ${me.user.name} · ${me.user.email}`;
+      await loadTrips();
+    } catch (error) { $('auth').classList.remove('hidden'); $('dashboard').classList.add('hidden'); showMessage('authMessage', error.message); }
+  }
+  async function loadTrips() {
+    const data = await api('/trips'); const container = $('trips'); container.replaceChildren();
+    if (!data.trips.length) { const p = document.createElement('p'); p.className = 'muted'; p.textContent = 'Todavía no tienes viajes. Crea el primero.'; container.append(p); return; }
+    for (const trip of data.trips) {
+      const card = document.createElement('article'); card.className = 'trip';
+      const info = document.createElement('div'); const title = document.createElement('h3'); title.textContent = trip.name;
+      const details = document.createElement('p'); details.textContent = [trip.destination, trip.start_date, trip.end_date].filter(Boolean).join(' · ') || 'Sin destino ni fechas';
+      const members = document.createElement('p'); members.className = 'small'; members.style.marginTop = '6px'; members.textContent = `${trip.member_count} participante(s) · ${trip.role === 'owner' ? 'Propietario' : 'Colaborador'}`;
+      info.append(title, details, members); const share = document.createElement('button'); share.className = 'btn secondary'; share.type = 'button'; share.textContent = 'Compartir';
+      share.addEventListener('click', () => openShare(trip)); card.append(info, share); container.append(card);
+    }
+  }
+  $('tripForm').addEventListener('submit', async event => {
+    event.preventDefault(); hideMessage('tripMessage');
+    try {
+      await api('/trips', { method: 'POST', body: JSON.stringify({ name: $('tripName').value, destination: $('destination').value, start_date: $('startDate').value, end_date: $('endDate').value, notes: $('notes').value }) });
+      $('tripForm').reset(); showMessage('tripMessage', 'Viaje guardado correctamente.'); await loadTrips();
+    } catch (error) { showMessage('tripMessage', error.message); }
+  });
+  function openShare(trip) { selectedTrip = trip; $('shareTitle').textContent = `Compartir: ${trip.name}`; $('sharePanel').classList.remove('hidden'); hideMessage('shareMessage'); $('shareEmail').value = ''; $('sharePanel').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  $('closeShare').addEventListener('click', () => $('sharePanel').classList.add('hidden'));
+  $('shareForm').addEventListener('submit', async event => {
+    event.preventDefault(); if (!selectedTrip) return; hideMessage('shareMessage');
+    try { await api(`/trips/${selectedTrip.id}/members`, { method: 'POST', body: JSON.stringify({ email: $('shareEmail').value }) }); showMessage('shareMessage', 'Participante añadido correctamente.'); await loadTrips(); }
+    catch (error) { showMessage('shareMessage', error.message); }
+  });
+  $('logout').addEventListener('click', async () => { try { await api('/logout', { method: 'POST', body: '{}' }); } finally { await loadApp(); } });
+  $('refresh').addEventListener('click', () => loadTrips().catch(error => showMessage('tripMessage', error.message)));
+  loadApp();
 </script>
-</body></html>
+</body>
+</html>

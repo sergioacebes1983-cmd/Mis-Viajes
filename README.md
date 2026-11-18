@@ -1,56 +1,64 @@
-# MI VIAJE — primera versión funcional
+# MI VIAJE — versión inicial para Cloudflare Pages + D1
 
-Aplicación web/PWA en español con:
-- Registro e inicio de sesión por correo y contraseña.
-- Contraseñas derivadas con PBKDF2-SHA-256 (310.000 iteraciones) y sal aleatoria.
-- Sesiones opacas en cookie HttpOnly, Secure y SameSite=Lax; sólo se guarda el hash del token.
-- Creación, edición y eliminación de viajes.
-- Compartir un viaje con otros usuarios registrados por correo.
-- Base de datos Cloudflare D1. No requiere PC encendido, NAS, Firebase, Supabase ni servicio de pago.
+Esta entrega es una base funcional inicial: registro e inicio de sesión, sesiones mediante cookie HttpOnly, creación/listado de viajes y colaboración por correo entre usuarios registrados. No es todavía la aplicación completa de planificación turística.
 
-## Coste
+## Requisitos
+- Cuenta gratuita de Cloudflare.
+- Repositorio GitHub conectado a Cloudflare Pages.
+- Una base de datos Cloudflare D1.
 
-El código no tiene licencias de pago ni integra servicios premium obligatorios. Cloudflare tiene un plan gratuito con límites; no se garantiza gratuidad ilimitada. Si se superan los límites, tendrás que reducir uso o elegir otra infraestructura. El dominio propio es opcional; se puede usar el subdominio gratuito de Cloudflare.
+## 1. Crear la base de datos D1
+1. En Cloudflare, abre **Workers & Pages → D1 SQL Database** (o **Storage & databases → D1**).
+2. Crea una base de datos llamada `mi-viaje-db`.
+3. Copia el **Database ID** que muestra Cloudflare.
+4. En GitHub, edita `wrangler.toml` y sustituye `REEMPLAZA_CON_TU_DATABASE_ID` por ese ID real. No cambies el nombre del binding `DB`.
+5. Guarda el cambio en la rama principal.
 
-## Despliegue
+## 2. Crear las tablas
+En la base de datos D1, abre **Console** y ejecuta el contenido completo de `migrations/0001_init.sql`.
 
-Requisitos: cuenta gratuita de Cloudflare y Node.js instalado en tu equipo sólo para ejecutar el proceso de publicación. Tu ordenador NO será el servidor: la aplicación quedará alojada en Cloudflare.
+## 3. Conectar GitHub a Cloudflare Pages
+1. En Cloudflare abre **Workers & Pages → Create application → Pages → Connect to Git**.
+2. Autoriza GitHub y selecciona este repositorio.
+3. Nombre del proyecto: `mi-viaje`.
+4. Framework preset: **None**.
+5. Build command: déjalo vacío.
+6. Build output directory: `public`.
+7. Completa el despliegue.
 
-1. Instala Wrangler:
-   `npm install -g wrangler`
-2. Inicia sesión:
-   `wrangler login`
-3. Crea la base de datos:
-   `npx wrangler d1 create mi-viaje-db`
-4. Copia el `database_id` que te devuelve el comando y sustituye `REEMPLAZA_CON_TU_DATABASE_ID` en `wrangler.toml`.
-5. Aplica el esquema:
-   `npx wrangler d1 migrations apply mi-viaje-db --remote`
-6. Publica la aplicación:
-   `npx wrangler pages deploy public --project-name mi-viaje`
+## 4. Asociar D1 al proyecto Pages
+En Cloudflare abre el proyecto Pages `mi-viaje` → **Settings → Functions → D1 database bindings**.
+Añade un binding con:
+- Variable name: `DB`
+- D1 database: `mi-viaje-db`
+Guarda y vuelve a desplegar el proyecto para que la función reciba el binding.
 
-Si Wrangler pide crear el proyecto de Pages, acepta. Al terminar te dará una URL `*.pages.dev`.
+## 5. Comprobar
+- Abre la dirección `https://mi-viaje.pages.dev/` (usa la URL exacta que Cloudflare asigne).
+- Para probar la API abre `/api/health`; debe devolver `{"ok":true,"service":"MI VIAJE API"}`.
+- Registra una cuenta con una contraseña de al menos 12 caracteres.
+- Crea un viaje.
+- Para compartirlo, la otra persona debe registrarse primero; después añade su correo desde el botón **Compartir**.
 
-## Cómo compartir un viaje
-
-1. Cada viajero crea su propia cuenta desde la web.
-2. El propietario abre el viaje.
-3. En “Compartir este viaje”, escribe el correo con el que la otra persona se registró.
-4. Esa persona verá el viaje al iniciar sesión y podrá editarlo.
-
-En esta primera versión sólo el propietario puede añadir participantes o borrar el viaje. Los participantes pueden consultar y editar. La invitación no envía correo: el propietario comunica a los viajeros que ya tienen acceso.
-
-## Límites y seguridad que debes conocer
-
-- Es una primera versión funcional, no una plataforma auditada profesionalmente.
-- No incluye recuperación de contraseña por email, verificación de correo, MFA, rate limiting ni invitaciones por enlace. No uses una contraseña reutilizada.
-- No almacenes pasaportes, tarjetas, billetes con datos personales ni documentos sensibles todavía.
-- Las notas de viaje son visibles para todos los miembros del viaje.
-- Los límites del plan gratuito de Cloudflare pueden cambiar. Revisa el panel de uso.
-- Para una aplicación pública real conviene añadir rate limiting, verificación de email, recuperación segura, protección antiabuso, auditoría de seguridad y pruebas.
+## Limitaciones importantes de esta versión
+- No hay verificación de correo ni recuperación de contraseña. El correo sólo identifica la cuenta; no se envía ningún mensaje.
+- No hay limitación de intentos de inicio de sesión integrada. Antes de abrir el registro al público, añade reglas de protección/rate limiting en Cloudflare y prueba seguridad.
+- No se deben guardar pasaportes, tarjetas, contraseñas de otros servicios ni documentos sensibles en esta versión.
+- No incluye todavía itinerarios diarios, mapas, presupuestos, archivos adjuntos, traducción ni conversión de divisas.
+- El plan gratuito tiene límites y condiciones que pueden cambiar; no existe garantía de uso ilimitado o coste cero para siempre.
 
 ## Estructura
-
-- `public/`: interfaz web instalable.
-- `functions/api/[[path]].js`: API y autenticación.
-- `migrations/0001_init.sql`: tablas de usuarios, sesiones, viajes y miembros.
-- `wrangler.toml`: configuración de Cloudflare Pages + D1.
+```text
+mi-viaje-corregido/
+├── functions/
+│   └── api/
+│       └── [[path]].js
+├── migrations/
+│   └── 0001_init.sql
+├── public/
+│   ├── icon.svg
+│   ├── index.html
+│   └── manifest.webmanifest
+├── wrangler.toml
+└── README.md
+```
